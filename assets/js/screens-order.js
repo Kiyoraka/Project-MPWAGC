@@ -305,4 +305,96 @@
   A.action('p:pointerup:cartrow', endSwipe);
   A.action('p:pointercancel:cartrow', endSwipe);
 
+  /* ========================================================================
+     7 - Tracking
+
+     Four steps advance on their own: 2 at 2800ms, 3 at 7200ms, 4 at 12500ms.
+     The ETA ticks down 4 minutes every 4200ms, floored at zero. The active
+     dot pulses until the order completes.
+     ======================================================================== */
+
+  A.screen('tracking', function (s) {
+    var steps = D.STEPICS.map(function (ic, i) {
+      var n = i + 1;
+      var done = s.step > n;
+      var act = s.step === n;
+      var cls = 'step-dot' + (done ? ' step-dot--done' : act ? ' step-dot--active' : '');
+      if (act && s.step < 4) { cls += ' step-dot--pulse'; }
+      var bar = i < 3
+        ? '<div class="step-bar"><div class="step-bar__fill" style="width:' + (done ? '100%' : '0%') + '"></div></div>'
+        : '';
+      return '' +
+        '<div class="step">' +
+          '<div class="' + cls + '">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24"><path d="' + ic + '" fill="' + (done || act ? '#fff' : '#B9A48C') + '"></path></svg>' +
+          '</div>' + bar +
+        '</div>';
+    }).join('');
+
+    var labels = D.STEPLBL.map(function (l, i) {
+      var on = s.step >= i + 1;
+      return '<div class="' + (on ? 'step-lbl step-lbl--on' : 'step-lbl') + '">' + A.esc(l) + '</div>';
+    }).join('');
+
+    var etaMsg = s.step >= 4
+      ? 'Enjoy your bolt, Afif ⚡ See you again'
+      : s.step === 3
+        ? 'Ready! Collect at the pickup counter'
+        : "We're brewing your bolt at Kubang Kerian";
+
+    var lines = D.ORDER.lines.map(function (l) {
+      return '<div class="odet__row"><span class="odet__name">' + A.esc(l.n) + '</span>' +
+             '<span class="odet__amt">' + A.esc(l.amt) + '</span></div>';
+    }).join('');
+
+    return '' +
+      '<div class="track noscroll">' +
+
+        '<div class="track__head">' +
+          '<button class="gbtn" data-act="nav" data-s="home">←</button>' +
+          '<div>' +
+            '<div class="track__id">' + A.esc(D.ORDER.id) + '</div>' +
+            '<div class="track__placed">' + A.esc(D.ORDER.placed) + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="track__rail">' +
+          '<div class="track__steps">' + steps + '</div>' +
+          '<div class="track__labels">' + labels + '</div>' +
+        '</div>' +
+
+        '<div class="glass-dark eta">' +
+          '<svg class="eta__bolt" width="90" height="90" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
+          '<div>' +
+            '<div class="eta__n">' + s.eta + '<span class="eta__unit"> min</span></div>' +
+            '<div class="eta__msg">' + A.esc(etaMsg) + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="glass odet">' +
+          '<div class="odet__title">Order details</div>' +
+          '<div class="odet__list">' +
+            lines +
+            '<div class="odet__row odet__row--total"><span>Total</span><span>' + A.esc(D.ORDER.total) + '</span></div>' +
+          '</div>' +
+        '</div>' +
+
+        '<button class="cta-outline track__back" data-act="nav" data-s="home">Back to Home</button>' +
+
+      '</div>';
+  });
+
+  A.action('place-order', function () {
+    A.nav('tracking');
+    A.setState({ step: 1, eta: 12 });
+
+    A.T(function () { A.setState({ step: 2 }); }, 2800);
+    A.T(function () { A.setState({ step: 3 }); }, 7200);
+    A.T(function () { A.setState({ step: 4, eta: 0 }); }, 12500);
+
+    A.setEtaTimer(setInterval(function () {
+      A.setState({ eta: Math.max(0, A.state.eta - 4) });
+    }, 4200));
+  });
+
 })(APP, D);
