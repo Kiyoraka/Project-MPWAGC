@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Getta Coffee - Customer PWA - Arrival and browsing screens
+
+   splash · onboard · home · menu
+
+   Values transcribed from "Getta PWA v2.dc.html". The design writes them as
+   inline styles; they are classes here so the renderers stay readable.
+   ========================================================================== */
+
+/* ==========================================================================
+   1 - Splash
+   ========================================================================== */
+
+.splash {
+  position: absolute;
+  inset: 0;
+  background: var(--maroon);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  z-index: 50;
+}
+
+/* the coffee rising inside the clipped mug silhouette */
+.splash__fill {
+  animation: mugFill .7s .75s var(--ease-settle) both;
+}
+
+/* the bolt strikes in from top-right, as it always must */
+.splash__bolt {
+  animation: boltDrop .55s .18s var(--ease-pop) both;
+}
+
+.splash__word {
+  text-align: center;
+  animation: wordIn .4s 1.15s both;
+}
+
+.splash__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 34px;
+  color: var(--cream);
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+.splash__tag {
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-top: 12px;
+}
