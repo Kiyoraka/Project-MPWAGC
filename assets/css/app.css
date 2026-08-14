@@ -119,14 +119,11 @@
   display: none;
 }
 
+/* Each screen's own root element is absolutely positioned and carries its
+   own layout, exactly as the source does - so the container stays a plain
+   block and never needs a per-screen display mode. */
 .screen.is-active {
   display: block;
-}
-
-/* screens that lay themselves out as a column (menu, product, cart, rewards) */
-.screen.is-active.screen--flex {
-  display: flex;
-  flex-direction: column;
 }
 
 /* every screen enters by sliding in from the right */
