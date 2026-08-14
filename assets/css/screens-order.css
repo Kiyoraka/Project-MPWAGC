@@ -763,3 +763,316 @@
   padding: 15px;
   font-size: 15px;
 }
+
+/* ==========================================================================
+   8 - Rewards
+   ========================================================================== */
+
+.rw {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rw__head {
+  padding: 54px 16px 0;
+}
+
+.rw__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--maroon);
+  text-align: center;
+}
+
+.rw__tabs {
+  display: flex;
+  margin-top: 12px;
+}
+
+.rw-tab {
+  flex: 1;
+  padding: 11px 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--inactive);
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+}
+
+.rw-tab--active {
+  font-weight: 800;
+  color: var(--maroon);
+  border-bottom-color: var(--orange);
+}
+
+.rw__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px 96px;
+  position: relative;
+}
+
+.rw__section {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--dark);
+  margin: 18px 2px 10px;
+}
+
+/* --- progress ring --------------------------------------------------------- */
+
+.ring-wrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.ring__arc {
+  transition: stroke-dashoffset 1.1s var(--ease-standard);
+}
+
+.ring__center {
+  position: absolute;
+  top: 106px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.ring__n {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--dark);
+  line-height: 1.1;
+}
+
+.ring__lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ring__to-gold {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.ring__gold {
+  color: var(--orange-text);
+  font-weight: 800;
+}
+
+/* --- daily check-in -------------------------------------------------------- */
+
+.checkin {
+  margin-top: 16px;
+  border-radius: 18px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.checkin__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkin__t {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--dark);
+}
+
+.checkin__day {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.checkin__coins {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 13px;
+}
+
+.coin-cell {
+  text-align: center;
+}
+
+.coin-stage {
+  width: 34px;
+  height: 34px;
+  perspective: 200px;
+}
+
+.coin {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  transform-style: preserve-3d;
+  transition: transform .5s;
+}
+
+.coin--flipped {
+  transform: rotateY(180deg);
+}
+
+.coin--flipping {
+  animation: coinFlip .5s forwards;
+}
+
+.coin__face,
+.coin__back {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.coin__face {
+  background: var(--cream);
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--inactive);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+}
+
+/* today's coin is the peach one with the orange ring */
+.coin__face--today {
+  background: var(--peach);
+  color: var(--orange-text);
+  box-shadow: inset 0 0 0 1.5px var(--orange);
+}
+
+.coin__back {
+  background: var(--maroon);
+  transform: rotateY(180deg);
+}
+
+.coin__stamp {
+  animation: stampIn .45s .1s both;
+}
+
+.coin-cell__d {
+  font-size: 8.5px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.checkin__btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px;
+  border-radius: var(--r-pill);
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: all .25s;
+  background: var(--orange);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--orange-press);
+}
+
+.checkin__btn--done {
+  background: var(--success-bg);
+  color: var(--success);
+  box-shadow: none;
+}
+
+/* --- confetti burst -------------------------------------------------------- */
+
+.confetti {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.confetti__p {
+  position: absolute;
+}
+
+.confetti__p--1 { width: 7px; height: 7px; background: var(--orange); animation: conf1 .8s ease-out forwards; }
+.confetti__p--2 { width: 6px; height: 6px; background: var(--maroon-glass); border: 1px solid var(--glass-edge-dark); border-radius: 50%; animation: conf2 .8s ease-out forwards; }
+.confetti__p--3 { width: 7px; height: 7px; background: var(--gold); animation: conf3 .8s ease-out forwards; }
+.confetti__p--4 { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: conf4 .8s ease-out forwards; }
+.confetti__p--5 { width: 5px; height: 9px; background: var(--maroon); animation: conf5 .8s ease-out forwards; }
+.confetti__p--6 { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; animation: conf6 .8s ease-out forwards; }
+.confetti__p--7 { width: 6px; height: 6px; background: var(--orange); animation: conf7 .8s ease-out forwards; }
+.confetti__p--8 { width: 7px; height: 5px; background: var(--success); animation: conf8 .8s ease-out forwards; }
+
+/* --- missions -------------------------------------------------------------- */
+
+.mission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mission {
+  padding: 14px 16px;
+}
+
+.mission__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mission__t {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--dark);
+}
+
+.mission__pts {
+  background: var(--peach);
+  color: var(--peach-text);
+  font-weight: 800;
+  font-size: 10.5px;
+  padding: 4px 9px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+
+.mission__s {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.mission__bar {
+  margin-top: 9px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--sand);
+  overflow: hidden;
+}
+
+.mission__fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: 3px;
+  transition: width .8s;
+}

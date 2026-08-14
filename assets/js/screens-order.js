@@ -397,4 +397,134 @@
     }, 4200));
   });
 
+  /* ========================================================================
+     8 - Rewards
+
+     Three tabs. Missions carries the 196px progress ring (dasharray 528,
+     animating to points/1000), the seven-day check-in strip of flipping
+     coins, and the mission list. The other two tabs land in Task 14.
+     ======================================================================== */
+
+  function rewardsHeader(s) {
+    var tabs = ['Missions', 'Redeem', 'My Rewards'].map(function (t, i) {
+      return '<button class="rw-tab' + (s.rwTab === i ? ' rw-tab--active' : '') +
+             '" data-act="set-rw" data-i="' + i + '">' + t + '</button>';
+    }).join('');
+    return '' +
+      '<div class="glass-bar rw__head">' +
+        '<div class="rw__title">Missions &amp; Rewards</div>' +
+        '<div class="rw__tabs">' + tabs + '</div>' +
+      '</div>';
+  }
+
+  function missionsTab(s) {
+    var pct = Math.min(1, s.points / D.COPY.goldTarget);
+    var offset = s.ringOn ? 528 * (1 - pct) : 528;
+
+    var coins = D.COINS.days.map(function (d, i) {
+      var today = i === D.COINS.today;
+      var done = i < D.COINS.claimed || (today && s.checked);
+      var val = D.COINS.vals[i];
+
+      var cls = 'coin' + (done ? ' coin--flipped' : '');
+      if (today && s.flipping && !s.checked) { cls += ' coin--flipping'; }
+
+      return '' +
+        '<div class="coin-cell">' +
+          '<div class="coin-stage">' +
+            '<div class="' + cls + '">' +
+              '<div class="coin__face' + (today ? ' coin__face--today' : '') + '">' + val + 'pt' + (val > 1 ? 's' : '') + '</div>' +
+              '<div class="coin__back">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24"' + (today && s.checked ? ' class="coin__stamp"' : '') + '><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="coin-cell__d">' + A.esc(d) + '</div>' +
+        '</div>';
+    }).join('');
+
+    var confetti = !s.confetti ? '' :
+      '<div class="confetti">' +
+        '<div class="confetti__p confetti__p--1"></div>' +
+        '<div class="confetti__p confetti__p--2"></div>' +
+        '<div class="confetti__p confetti__p--3"></div>' +
+        '<div class="confetti__p confetti__p--4"></div>' +
+        '<div class="confetti__p confetti__p--5"></div>' +
+        '<div class="confetti__p confetti__p--6"></div>' +
+        '<div class="confetti__p confetti__p--7"></div>' +
+        '<div class="confetti__p confetti__p--8"></div>' +
+      '</div>';
+
+    var missions = D.MISSIONS.map(function (m) {
+      return '' +
+        '<div class="glass mission">' +
+          '<div class="mission__top">' +
+            '<div class="mission__t">' + A.esc(m.t) + '</div>' +
+            '<div class="mission__pts">+' + m.pts + ' pts</div>' +
+          '</div>' +
+          '<div class="mission__s">' + A.esc(m.s) + '</div>' +
+          '<div class="mission__bar"><div class="mission__fill" style="width:' + m.w + '%"></div></div>' +
+        '</div>';
+    }).join('');
+
+    return '' +
+      '<div class="ring-wrap">' +
+        '<svg width="196" height="196" viewBox="0 0 200 200">' +
+          '<circle cx="100" cy="100" r="84" fill="none" stroke="#F0E4C6" stroke-width="13"></circle>' +
+          '<circle class="ring__arc" cx="100" cy="100" r="84" fill="none" stroke="#EE7623" stroke-width="13" stroke-linecap="round" stroke-dasharray="528" style="stroke-dashoffset:' + offset + '" transform="rotate(-90 100 100)"></circle>' +
+          '<g transform="translate(64,52) scale(0.52)">' +
+            '<path d="M70 14 C39 14 16 37 16 68 c0 31 23 54 54 54 h34 c5 0 9-4 9-9 V88 c8-2 14-10 14-19 0-11-9-20-20-20h-4 C97 30 85 14 70 14z" fill="#7A2418"></path>' +
+            '<circle cx="107" cy="69" r="9" fill="#FDF9F0"></circle>' +
+            '<path d="M78 26 56 66h16l-8 44 32-52H78l10-32z" fill="#EE7623"></path>' +
+          '</g>' +
+        '</svg>' +
+        '<div class="ring__center">' +
+          '<div class="ring__n">' + s.points + '</div>' +
+          '<div class="ring__lbl">bolt points</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="ring__to-gold">' + (D.COPY.goldTarget - s.points) + ' pts to <span class="ring__gold">GOLD BOLT</span> tier</div>' +
+
+      '<div class="glass glass--raised checkin">' +
+        confetti +
+        '<div class="checkin__top">' +
+          '<div class="checkin__t">Daily Check-in</div>' +
+          '<div class="checkin__day">Day 4 of 7</div>' +
+        '</div>' +
+        '<div class="checkin__coins">' + coins + '</div>' +
+        '<button class="checkin__btn' + (s.checked ? ' checkin__btn--done' : '') + '" data-act="checkin">' +
+          (s.checked ? 'Checked in — +3 pts ⚡' : 'Check-in &amp; get 3 pts') +
+        '</button>' +
+      '</div>' +
+
+      '<div class="rw__section">Complete missions, earn bolts</div>' +
+      '<div class="mission-list">' + missions + '</div>';
+  }
+
+  A.screen('rewards', function (s) {
+    var body = s.rwTab === 0 ? missionsTab(s) : '';
+    return '' +
+      '<div class="rw">' +
+        rewardsHeader(s) +
+        '<div class="rw__scroll noscroll">' + body + '</div>' +
+      '</div>';
+  });
+
+  A.action('set-rw', function (e, d) {
+    A.setState({ rwTab: +d.i, ringOn: false });
+    A.T(function () { A.setState({ ringOn: true }); }, 250);
+  });
+
+  A.action('checkin', function () {
+    if (A.state.checked) { return; }
+    A.setState({ flipping: true });
+    A.T(function () {
+      A.state.points = A.state.points + 3;
+      A.state.dp = A.state.points;
+      A.setState({ checked: true, confetti: true });
+    }, 350);
+    A.T(function () { A.setState({ confetti: false }); }, 1400);
+  });
+
 })(APP, D);
