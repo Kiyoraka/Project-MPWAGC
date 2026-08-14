@@ -131,6 +131,17 @@
   animation: scrIn .28s ease-out;
 }
 
+/* One-shot entrance animations.
+
+   Mark an element `.entrance` when its animation should fire on mount only.
+   app.js sets data-entrance="off" on any render that is NOT a genuine
+   remount, which suppresses them - reproducing the mount-stability React
+   gives the design for free. `!important` is needed because the staggered
+   product cards carry their delay as an inline style. */
+.screen[data-entrance="off"] .entrance {
+  animation: none !important;
+}
+
 /* the scrolling body of a screen */
 .scroll {
   flex: 1;

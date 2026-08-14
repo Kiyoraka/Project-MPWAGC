@@ -221,6 +221,26 @@ var APP = (function (D) {
 
   var root, navbar, statusbar;
   var lastScreen = null;
+  var lastEntranceKey = null;
+
+  /* Entrance-animation epoch.
+
+     The design runs on React, so advancing the carousel reconciles only the
+     nodes that changed - the install card is never remounted and its fadeUp
+     does not replay. Our renderer rewrites a screen's innerHTML wholesale, so
+     without this every one-shot entrance would re-fire on every unrelated
+     state change (the install card blinking on each 3.6s carousel tick, the
+     product-card stagger replaying when you merely toggle Pickup/Delivery).
+
+     The key names what an entrance legitimately depends on: the screen, plus
+     the datum whose change genuinely remounts those nodes in the source -
+     `cat` for the menu list, `obIdx` for the onboarding slide. When the key is
+     unchanged, elements marked `.entrance` render without their animation. */
+  function entranceKeyFor(key) {
+    if (key === 'menu') { return 'menu|' + state.cat; }
+    if (key === 'onboard') { return 'onboard|' + state.obIdx; }
+    return key;
+  }
 
   function render() {
     if (!root) { return; }
@@ -235,6 +255,11 @@ var APP = (function (D) {
       all[i].classList.toggle('is-active', all[i].dataset.screen === key);
       if (all[i].dataset.screen !== key) { all[i].innerHTML = ''; }
     }
+
+    /* decide before painting whether this pass may run entrance animations */
+    var ekey = entranceKeyFor(key);
+    host.dataset.entrance = (ekey !== lastEntranceKey) ? 'on' : 'off';
+    lastEntranceKey = ekey;
 
     var fn = SCREENS[key];
     host.innerHTML = fn ? fn(state) : '';

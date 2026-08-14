@@ -73,7 +73,7 @@
           '<button class="onboard__skip" data-act="ob-skip">Skip</button>' +
         '</div>' +
 
-        '<div class="onboard__body">' +
+        '<div class="onboard__body entrance">' +
           '<div class="onboard__disc" style="background:' + slide.bg + '">' +
             '<svg width="84" height="84" viewBox="0 0 24 24"><path d="' + slide.ic + '" fill="#F7F1DC"></path></svg>' +
           '</div>' +
@@ -134,7 +134,7 @@
     }).join('');
 
     var install = !s.install ? '' :
-      '<div class="install">' +
+      '<div class="install entrance">' +
         '<svg width="26" height="26" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
         '<div class="install__text">' +
           '<div class="install__title">Install Getta Coffee</div>' +
@@ -212,6 +212,131 @@
   A.action('go-pickup', function () {
     A.state.otype = 'pickup';
     A.nav('menu');
+  });
+
+  /* ========================================================================
+     4 - Menu
+
+     Sticky glass header (order-type segment + search), optional promo bar,
+     then a two-column body: an 86px category rail beside the product list.
+
+     Changing category sets menuLoad, shows three shimmer blocks for 620ms,
+     then renders. Tapping the category you are already on is ignored, as in
+     the source. Product cards stagger their fadeUp by position within the
+     category: delay = index * .03 + .02s.
+     ======================================================================== */
+
+  A.screen('menu', function (s) {
+    var cat = D.CATS[s.cat];
+
+    var rail = D.CATS.map(function (c, i) {
+      var on = i === s.cat;
+      return '' +
+        '<div class="cat' + (on ? ' cat--active' : '') + '" data-act="set-cat" data-i="' + i + '">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24"><path d="' + c.ic + '" fill="' + (on ? '#7A2418' : '#A78F72') + '" fill-rule="evenodd"></path></svg>' +
+          '<div class="cat__name">' + A.esc(c.n) + '</div>' +
+        '</div>';
+    }).join('');
+
+    var promo = !s.promo ? '' :
+      '<div class="promo">' +
+        '<svg width="15" height="15" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#C2570F"></path></svg>' +
+        '<div class="promo__text">' + A.esc(D.COPY.promoText) + '<span class="promo__code">' + A.esc(D.COPY.promoCode) + '</span></div>' +
+        '<button class="promo__x" data-act="promo-dismiss">✕</button>' +
+      '</div>';
+
+    var body;
+    if (s.menuLoad) {
+      body = '<div class="prod-list">' +
+        '<div class="skel"></div><div class="skel"></div><div class="skel"></div>' +
+      '</div>';
+    } else {
+      /* the design staggers by position WITHIN the category, so the first
+         card of every category always starts at .02s */
+      var n = -1;
+      var cards = D.P.map(function (p, i) { return { p: p, i: i }; })
+        .filter(function (x) { return x.p.cat === s.cat; })
+        .map(function (x) {
+          n++;
+          var delay = (n * 0.03 + 0.02).toFixed(2);
+          return '' +
+            '<div class="glass prod entrance" style="animation:fadeUp .3s ' + delay + 's both" data-act="open-product" data-i="' + x.i + '">' +
+              '<div class="cup-well prod__well">' +
+                '<div class="prod__cup">' +
+                  '<div class="cup__lid prod__lid"></div>' +
+                  '<div class="cup__body prod__body" style="background:linear-gradient(180deg,' + x.p.c1 + ',' + x.p.c2 + ')">' +
+                    '<div class="cup__foam prod__foam"></div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="prod__text">' +
+                '<div class="prod__tag">' + A.esc(x.p.tag) + '</div>' +
+                '<div class="prod__name">' + A.esc(x.p.n) + '</div>' +
+                '<div class="prod__price">' + A.fmt(x.p.pr) + '</div>' +
+              '</div>' +
+              '<div class="prod__add">+</div>' +
+            '</div>';
+        }).join('');
+      body = '<div class="prod-list">' + cards + '</div>';
+    }
+
+    return '' +
+      '<div class="menu">' +
+
+        '<div class="glass-bar menu__head">' +
+          '<div class="menu__row">' +
+            '<div class="segment">' +
+              '<button class="chip' + (s.otype === 'pickup' ? ' chip--on' : '') + '" data-act="set-otype" data-s="pickup">Pickup</button>' +
+              '<button class="chip' + (s.otype === 'delivery' ? ' chip--on' : '') + '" data-act="set-otype" data-s="delivery">Delivery</button>' +
+            '</div>' +
+            '<button class="menu__search">' +
+              '<svg width="17" height="17" viewBox="0 0 24 24"><path d="M10 3a7 7 0 1 0 4.3 12.6l5 5 1.7-1.7-5-5A7 7 0 0 0 10 3zm0 2.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2z" fill="#7A2418"></path></svg>' +
+            '</button>' +
+          '</div>' +
+          '<div class="menu__outlet">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" fill="#EE7623"></path></svg>' +
+            '<div class="menu__outlet-name">' + A.esc(D.COPY.outlet) + '</div>' +
+            '<svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" fill="#7A2418"></path></svg>' +
+          '</div>' +
+        '</div>' +
+
+        promo +
+
+        '<div class="menu__body">' +
+          '<div class="cat-rail noscroll">' + rail + '</div>' +
+          '<div class="menu__list noscroll">' +
+            '<div class="cat-ban">' +
+              '<svg class="cat-ban__bolt" width="70" height="70" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
+              '<div class="cat-ban__title">' + A.esc(cat.ban[0]) + '</div>' +
+              '<div class="cat-ban__sub">' + A.esc(cat.ban[1]) + '</div>' +
+            '</div>' +
+            body +
+          '</div>' +
+        '</div>' +
+
+      '</div>';
+  });
+
+  A.action('set-otype', function (e, d) {
+    A.setState({ otype: d.s });
+  });
+
+  A.action('promo-dismiss', function () {
+    A.setState({ promo: false });
+  });
+
+  A.action('set-cat', function (e, d) {
+    var i = +d.i;
+    if (i === A.state.cat) { return; }         /* same-category taps ignored */
+    A.setState({ cat: i, menuLoad: true });
+    A.T(function () { A.setState({ menuLoad: false }); }, 620);
+  });
+
+  A.action('open-product', function (e, d) {
+    A.assign(A.state, {
+      sel: +d.i, size: 0, sugar: 3, milk: 0, addons: [], qty: 1, added: false
+    });
+    A.nav('product');
   });
 
 })(APP, D);
