@@ -255,3 +255,308 @@
   animation: flyDot .65s ease-in forwards;
   z-index: 5;
 }
+
+/* ==========================================================================
+   6 - Cart
+   ========================================================================== */
+
+.cartv {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+}
+
+.cartv__head {
+  padding: 52px 16px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+}
+
+.cartv__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--maroon);
+}
+
+.cartv__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 16px 150px;
+}
+
+/* --- order type card ------------------------------------------------------ */
+
+.otype {
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.otype__text {
+  flex: 1;
+}
+
+.otype__name {
+  color: var(--cream);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.otype__sub {
+  color: var(--on-maroon-dim);
+  font-size: 11px;
+}
+
+.otype__change {
+  color: var(--tan);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* --- rows ----------------------------------------------------------------- */
+
+.cartv__hint {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 14px 2px 8px;
+  letter-spacing: .4px;
+}
+
+.cartv__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* the red delete bed the row slides off to reveal */
+.crow {
+  border-radius: var(--r-card);
+  background: var(--danger);
+  position: relative;
+  overflow: hidden;
+}
+
+.crow__bed {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.crow__body {
+  position: relative;
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  background: var(--glass-fill-row);
+  padding: 10px 12px;
+  border-radius: var(--r-card);
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+
+.crow__well {
+  width: 44px;
+  height: 52px;
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+
+.crow__cup {
+  width: 26px;
+}
+
+.crow__lid {
+  height: 5px;
+  border-width: 1px;
+  border-radius: 3px 3px 0 0;
+}
+
+.crow__cupbody {
+  height: 30px;
+  border-radius: 1px 1px 8px 8px;
+}
+
+.crow__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.crow__name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--dark);
+}
+
+.crow__det {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.crow__right {
+  text-align: right;
+  flex: none;
+}
+
+.crow__price {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--maroon);
+  white-space: nowrap;
+}
+
+.crow__qty {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* --- voucher row ----------------------------------------------------------- */
+
+.voucher-row {
+  margin-top: 14px;
+  border-radius: var(--r-card);
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all .2s;
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--sh-glass-soft);
+}
+
+.voucher-row--on {
+  background: var(--success-bg);
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--success);
+}
+
+.voucher-row__lbl {
+  flex: 1;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--dark);
+}
+
+.voucher-row--on .voucher-row__lbl {
+  color: var(--success-text);
+}
+
+.voucher-row__cta {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--orange-text);
+}
+
+.voucher-row--on .voucher-row__cta {
+  color: var(--muted);
+}
+
+/* --- wallet row ------------------------------------------------------------ */
+
+.wallet-row {
+  margin-top: 10px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.wallet-row__chip {
+  width: 34px;
+  height: 24px;
+  border-radius: 5px;
+  background: var(--maroon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wallet-row__text {
+  flex: 1;
+}
+
+.wallet-row__name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--dark);
+}
+
+.wallet-row__bal {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* --- totals ---------------------------------------------------------------- */
+
+.totals {
+  margin-top: 14px;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--body);
+}
+
+.totals__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.totals__row--save {
+  color: var(--success);
+}
+
+.totals__strong {
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.totals__row--save .totals__strong {
+  color: inherit;
+}
+
+/* --- sticky footer ---------------------------------------------------------- */
+
+.cartv__foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cartv__total-lbl {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.cartv__total {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 21px;
+  color: var(--dark);
+}
+
+.cartv__place {
+  flex: 1;
+  width: auto;
+  padding: 16px;
+  font-size: 16px;
+}
