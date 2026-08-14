@@ -186,7 +186,7 @@
   background: var(--glass-fill-bar);
   -webkit-backdrop-filter: blur(var(--glass-blur-bar));
   backdrop-filter: blur(var(--glass-blur-bar));
-  border-bottom: 1px solid var(--glass-edge);
+  border-bottom: 1px solid var(--glass-edge-bar);
   flex: none;
 }
 

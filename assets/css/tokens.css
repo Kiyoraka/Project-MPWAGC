@@ -82,7 +82,8 @@
 
   /* --- Glass ------------------------------------------------------------ */
   --glass-fill:      rgba(255, 255, 255, .55);  /* card surfaces           */
-  --glass-fill-soft: rgba(255, 255, 255, .45);  /* inset pills, rails      */
+  --glass-fill-soft: rgba(255, 255, 255, .45);  /* segmented control       */
+  --glass-fill-rail: rgba(255, 255, 255, .40);  /* menu category rail      */
   --glass-fill-btn:  rgba(255, 255, 255, .50);  /* round glass buttons     */
   --glass-fill-nav:  rgba(255, 252, 243, .55);  /* bottom nav              */
   --glass-fill-bar:  rgba(247, 241, 220, .55);  /* sticky screen headers   */
@@ -90,6 +91,7 @@
   --glass-edge:      rgba(255, 255, 255, .70);  /* 1px card border         */
   --glass-edge-btn:  rgba(255, 255, 255, .75);  /* round button border     */
   --glass-edge-soft: rgba(255, 255, 255, .65);  /* nav top hairline        */
+  --glass-edge-bar:  rgba(255, 255, 255, .60);  /* sticky header + rail    */
   --glass-edge-dark: rgba(255, 255, 255, .22);  /* border on dark glass    */
   --glass-inset:     rgba(255, 255, 255, .85);  /* inset ring on pills     */
   --glass-inset-sm:  rgba(255, 255, 255, .75);  /* inset ring, tighter     */

@@ -523,10 +523,10 @@
 .cat-rail {
   width: 86px;
   flex: none;
-  background: var(--glass-fill-soft);
+  background: var(--glass-fill-rail);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
-  border-right: 1px solid var(--glass-edge);
+  border-right: 1px solid var(--glass-edge-bar);
   overflow-y: auto;
   padding: 6px 0 90px;
 }
