@@ -502,8 +502,77 @@
       '<div class="mission-list">' + missions + '</div>';
   }
 
+  function redeemTab(s) {
+    var tiles = D.REDEEMS.map(function (r) {
+      return '' +
+        '<div class="glass redeem">' +
+          '<div class="redeem__v" style="background:' + r.bg + ';color:' + r.fg + '">' + A.esc(r.v) + '</div>' +
+          '<div class="redeem__foot">' +
+            '<div class="redeem__with">Redeem with</div>' +
+            '<div class="redeem__pts">' + r.pts + ' pts</div>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+
+    return '' +
+      '<div class="glass-dark balance">' +
+        '<svg width="26" height="30" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
+        '<div class="balance__text">' +
+          '<div class="balance__lbl">YOUR BALANCE</div>' +
+          '<div class="balance__n">' + s.points + ' pts</div>' +
+        '</div>' +
+        '<div class="balance__tier">EASY GOER</div>' +
+      '</div>' +
+
+      '<div class="rw__section rw__section--tight">Getta Rewards</div>' +
+      '<div class="redeem-grid">' + tiles + '</div>' +
+
+      '<div class="rw__section rw__section--tight">Gold Bolt Exclusive</div>' +
+      '<div class="gold">' +
+        '<svg class="gold__bolt" width="72" height="72" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#E0A526"></path></svg>' +
+        '<div class="gold__disc"><svg width="20" height="20" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#2B1510"></path></svg></div>' +
+        '<div class="gold__text">' +
+          '<div class="gold__t">RM 12 OFF anything</div>' +
+          '<div class="gold__s">1,000 pts · Gold Bolt members only</div>' +
+        '</div>' +
+        '<div class="gold__lock">LOCKED</div>' +
+      '</div>';
+  }
+
+  function mineTab(s) {
+    var list = D.VOUCHERS.map(function (v) {
+      var used = !!s.used[v.i];
+      var tearing = s.torn === v.i;
+      return '' +
+        '<div class="voucher' + (used ? ' voucher--used' : '') + '">' +
+          '<div class="voucher__stub' + (used ? ' voucher__stub--used' : '') + (tearing ? ' voucher__stub--tearing' : '') + '">' +
+            '<div class="voucher__amt">' + A.esc(v.amt) + '</div>' +
+            '<div class="voucher__off">OFF</div>' +
+          '</div>' +
+          '<div class="voucher__main">' +
+            '<div class="voucher__notch voucher__notch--top"></div>' +
+            '<div class="voucher__notch voucher__notch--bot"></div>' +
+            '<div class="voucher__t">' + A.esc(v.t) + '</div>' +
+            '<div class="voucher__meta">' +
+              '<span>Validity <b>' + v.days + ' days</b></span>' +
+              '<span>Min spend <b>' + A.esc(v.min) + '</b></span>' +
+            '</div>' +
+            '<button class="voucher__btn' + (used ? ' voucher__btn--used' : '') + '" data-act="use-voucher" data-i="' + v.i + '">' +
+              (used ? 'USED' : 'Use now') +
+            '</button>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+
+    return '' +
+      '<div class="rw__section rw__section--first">Your vouchers</div>' +
+      '<div class="voucher-list">' + list + '</div>';
+  }
+
   A.screen('rewards', function (s) {
-    var body = s.rwTab === 0 ? missionsTab(s) : '';
+    var body = s.rwTab === 0 ? missionsTab(s)
+             : s.rwTab === 1 ? redeemTab(s)
+             : mineTab(s);
     return '' +
       '<div class="rw">' +
         rewardsHeader(s) +
@@ -525,6 +594,23 @@
       A.setState({ checked: true, confetti: true });
     }, 350);
     A.T(function () { A.setState({ confetti: false }); }, 1400);
+  });
+
+  A.action('use-voucher', function (e, d) {
+    var i = +d.i;
+    if (A.state.used[i]) { return; }
+    A.setState({ torn: i });
+    A.T(function () {
+      A.state.used = A.assign({}, A.state.used);
+      A.state.used[i] = true;
+      A.setState({ torn: -1 });
+    }, 850);
+  });
+
+  /* jump straight to the My Rewards tab - used by the Account screen */
+  A.action('go-vouchers', function () {
+    A.state.rwTab = 2;
+    A.nav('rewards');
   });
 
 })(APP, D);

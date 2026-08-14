@@ -1076,3 +1076,268 @@
   border-radius: 3px;
   transition: width .8s;
 }
+
+/* --- Redeem tab ------------------------------------------------------------ */
+
+.rw__section--tight {
+  margin: 16px 2px 10px;
+}
+
+.rw__section--first {
+  margin: 2px 2px 10px;
+}
+
+.balance {
+  border-radius: 18px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.balance__text {
+  flex: 1;
+}
+
+.balance__lbl {
+  font-size: 10.5px;
+  color: var(--on-maroon-dim);
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.balance__n {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 23px;
+  color: var(--cream);
+  line-height: 1.1;
+}
+
+.balance__tier {
+  background: rgba(247, 241, 220, .15);
+  color: var(--cream);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+
+.redeem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.redeem {
+  overflow: hidden;
+  padding: 0;
+}
+
+.redeem__v {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.redeem__foot {
+  padding: 10px 12px;
+}
+
+.redeem__with {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.redeem__pts {
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--dark);
+}
+
+/* the locked Gold Bolt row */
+.gold {
+  background: linear-gradient(112deg, #2B1510, var(--gold-deep));
+  border-radius: var(--r-card);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gold__bolt {
+  position: absolute;
+  right: -8px;
+  top: -6px;
+  opacity: .2;
+}
+
+.gold__disc {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.gold__text {
+  flex: 1;
+}
+
+.gold__t {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--cream);
+}
+
+.gold__s {
+  font-size: 11px;
+  color: var(--gold-dim);
+  font-weight: 600;
+}
+
+.gold__lock {
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 11px;
+  border: 1.5px solid var(--gold);
+  border-radius: var(--r-pill);
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+/* --- My Rewards tab -------------------------------------------------------- */
+
+.voucher-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.voucher {
+  display: flex;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-glass);
+  overflow: visible;
+  position: relative;
+  transition: opacity .3s;
+}
+
+.voucher--used {
+  opacity: .45;
+}
+
+/* the tear-off stub */
+.voucher__stub {
+  width: 86px;
+  flex: none;
+  background: var(--maroon);
+  border-radius: var(--r-card) 0 0 var(--r-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px dashed var(--offwhite);
+}
+
+.voucher__stub--used {
+  background: var(--muted);
+}
+
+.voucher__stub--tearing {
+  animation: tearOff .7s ease-in forwards;
+}
+
+.voucher__amt {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  color: var(--cream);
+  line-height: 1;
+}
+
+.voucher__off {
+  font-size: 8.5px;
+  color: var(--on-maroon-dim);
+  font-weight: 700;
+  letter-spacing: .5px;
+  margin-top: 3px;
+}
+
+.voucher__main {
+  flex: 1;
+  padding: 13px 14px 13px 18px;
+  position: relative;
+}
+
+/* the two punched notches where the stub meets the body */
+.voucher__notch {
+  position: absolute;
+  left: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--notch);
+}
+
+.voucher__notch--top { top: -7px; }
+.voucher__notch--bot { bottom: -7px; }
+
+.voucher__t {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--dark);
+}
+
+.voucher__meta {
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.voucher__meta span {
+  white-space: nowrap;
+}
+
+.voucher__meta b {
+  color: var(--dark);
+}
+
+.voucher__btn {
+  margin-top: 9px;
+  padding: 7px 16px;
+  border-radius: var(--r-pill);
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  background: var(--orange);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--orange-press);
+}
+
+.voucher__btn--used {
+  background: var(--rail);
+  color: var(--muted);
+  box-shadow: none;
+}
