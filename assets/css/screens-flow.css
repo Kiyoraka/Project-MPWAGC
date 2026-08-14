@@ -147,3 +147,279 @@
   font-size: 17px;
   letter-spacing: .5px;
 }
+
+/* ==========================================================================
+   3 - Home
+   ========================================================================== */
+
+.home {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 56px 16px 96px;
+}
+
+.home__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home__greet {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 21px;
+  color: var(--maroon);
+}
+
+.home__greet-sub {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.home__bell {
+  position: relative;
+}
+
+/* --- the three stat tiles ------------------------------------------------ */
+
+.home__tiles {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.tile {
+  flex: 1;
+  padding: 10px 12px;
+  box-shadow: var(--sh-glass-tile);
+}
+
+.tile__lbl {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: .3px;
+}
+
+.tile__val {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--dark);
+}
+
+.tile__unit {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* the bolt-points tile is the dark glass one, and it navigates to Rewards */
+.tile--dark {
+  background: var(--maroon-glass);
+  border: 1px solid var(--glass-edge-dark);
+  -webkit-backdrop-filter: blur(var(--glass-blur-xs));
+  backdrop-filter: blur(var(--glass-blur-xs));
+  border-radius: var(--r-card);
+  position: relative;
+  cursor: pointer;
+  box-shadow: var(--sh-dark);
+}
+
+.tile__lbl--dark {
+  color: var(--on-maroon-dim);
+}
+
+.tile__val--dark {
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.tile__badge {
+  position: absolute;
+  top: -8px;
+  right: 6px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 8.5px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: var(--r-pill);
+  letter-spacing: .4px;
+  white-space: nowrap;
+  animation: pulseRing 2s infinite;
+}
+
+/* --- banner carousel -----------------------------------------------------
+   Slides are 358px: the design's 390px column less its 16px side padding.
+   Keeping the app column at 390px is what keeps this integer-exact.
+   ------------------------------------------------------------------------ */
+
+.carousel {
+  margin-top: 16px;
+  border-radius: var(--r-tile);
+  overflow: hidden;
+  position: relative;
+  height: 150px;
+}
+
+.carousel__track {
+  display: flex;
+  height: 100%;
+  transition: transform .55s var(--ease-standard);
+}
+
+.ban {
+  width: 358px;
+  flex: none;
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+  padding: 20px 22px;
+  box-sizing: border-box;
+}
+
+.ban__bolt {
+  position: absolute;
+  right: -10px;
+  top: -8px;
+  opacity: .9;
+  transition: transform .7s ease-out;
+}
+
+.ban__body {
+  position: relative;
+}
+
+.ban__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.05;
+  max-width: 230px;
+}
+
+.ban__sub {
+  font-size: 12.5px;
+  font-weight: 500;
+  margin-top: 7px;
+  max-width: 220px;
+}
+
+.ban__cta {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  letter-spacing: .4px;
+}
+
+.carousel__dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.ban-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .9);
+  transition: width .3s;
+}
+
+.ban-dot--active {
+  width: 18px;
+}
+
+/* --- delivery / pickup ---------------------------------------------------- */
+
+.home__modes {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.mode {
+  flex: 1;
+  padding: 16px 14px 14px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(122, 36, 24, .10);
+}
+
+.mode__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--maroon);
+  margin-top: 8px;
+}
+
+.mode__sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* --- install prompt (decorative - this is a static demo) ------------------ */
+
+.install {
+  margin-top: 16px;
+  background: rgba(43, 21, 16, .9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: var(--r-card);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeUp .3s .2s both;
+}
+
+.install__text {
+  flex: 1;
+}
+
+.install__title {
+  color: var(--cream);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.install__sub {
+  color: #B99A88;
+  font-size: 11px;
+}
+
+.install__add {
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  box-shadow: 0 3px 0 var(--orange-press);
+}
+
+.install__x {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px;
+}

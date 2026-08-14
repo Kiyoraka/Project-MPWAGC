@@ -102,4 +102,116 @@
     }
   });
 
+  /* ========================================================================
+     3 - Home
+
+     Wallet and bolt points show `dw` / `dp`, the animated count-up figures
+     app.js drives. The carousel track is 358px per slide - the design's
+     390px width less its 16px side padding - and translates by index. The
+     decorative bolt on each slide parallaxes by (i - bIdx) * -26px.
+     ======================================================================== */
+
+  A.screen('home', function (s) {
+    var SLIDE = 358;
+
+    var slides = D.BANNERS.map(function (b, i) {
+      var par = 'transform:translateX(' + ((i - s.bIdx) * -26) + 'px)';
+      return '' +
+        '<div class="ban" style="background:' + b.bg + '">' +
+          '<svg class="ban__bolt" width="130" height="130" viewBox="0 0 24 24" style="' + par + '">' +
+            '<path d="' + BOLT_PATH + '" fill="' + b.deco + '"></path>' +
+          '</svg>' +
+          '<div class="ban__body">' +
+            '<div class="ban__title" style="color:' + b.fg + '">' + A.esc(b.t) + '</div>' +
+            '<div class="ban__sub" style="color:' + b.sub + '">' + A.esc(b.s) + '</div>' +
+            '<div class="ban__cta" style="background:' + b.btnBg + ';color:' + b.btnFg + '">' + A.esc(b.cta) + '</div>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+
+    var dots = D.BANNERS.map(function (_, i) {
+      return '<div class="ban-dot' + (i === s.bIdx ? ' ban-dot--active' : '') + '"></div>';
+    }).join('');
+
+    var install = !s.install ? '' :
+      '<div class="install">' +
+        '<svg width="26" height="26" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
+        '<div class="install__text">' +
+          '<div class="install__title">Install Getta Coffee</div>' +
+          '<div class="install__sub">Add to Home Screen — works offline</div>' +
+        '</div>' +
+        '<button class="install__add" data-act="install-dismiss">Add</button>' +
+        '<button class="install__x" data-act="install-dismiss">✕</button>' +
+      '</div>';
+
+    return '' +
+      '<div class="home noscroll">' +
+
+        '<div class="home__head">' +
+          '<div>' +
+            '<div class="home__greet">' + A.esc(D.COPY.greeting) + '</div>' +
+            '<div class="home__greet-sub">' + A.esc(D.COPY.greetingSub) + '</div>' +
+          '</div>' +
+          '<button class="gbtn gbtn--lg home__bell">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v4l-2 4h18l-2-4V9a7 7 0 0 0-7-7zm-3 17a3 3 0 0 0 6 0z" fill="#7A2418"></path></svg>' +
+            '<div class="gbtn__dot"></div>' +
+          '</button>' +
+        '</div>' +
+
+        '<div class="home__tiles">' +
+          '<div class="glass tile">' +
+            '<div class="tile__lbl">WALLET (RM)</div>' +
+            '<div class="tile__val">' + A.esc(s.dw) + '</div>' +
+          '</div>' +
+          '<div class="glass tile">' +
+            '<div class="tile__lbl">CUP STREAK</div>' +
+            '<div class="tile__val">4<span class="tile__unit">/10 ☕︎</span></div>' +
+          '</div>' +
+          '<div class="tile tile--dark" data-act="nav" data-s="rewards">' +
+            '<div class="tile__badge">CHECK-IN</div>' +
+            '<div class="tile__lbl tile__lbl--dark">BOLT PTS</div>' +
+            '<div class="tile__val tile__val--dark">' +
+              '<svg width="11" height="14" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
+              A.esc(s.dp) +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="carousel">' +
+          '<div class="carousel__track" style="transform:translateX(-' + (s.bIdx * SLIDE) + 'px)">' + slides + '</div>' +
+          '<div class="carousel__dots">' + dots + '</div>' +
+        '</div>' +
+
+        '<div class="home__modes">' +
+          '<div class="glass glass--tile mode hover-lift" data-act="go-delivery">' +
+            '<svg width="64" height="52" viewBox="0 0 64 52"><circle cx="14" cy="42" r="8" fill="none" stroke="#7A2418" stroke-width="3"></circle><circle cx="48" cy="42" r="8" fill="none" stroke="#7A2418" stroke-width="3"></circle><path d="M14 42 24 20h12l6 22" fill="none" stroke="#7A2418" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path><path d="M36 20h10l6 10" fill="none" stroke="#EE7623" stroke-width="3" stroke-linecap="round"></path><rect x="20" y="8" width="18" height="12" rx="3" fill="#EE7623"></rect><path d="M27 10.5 24 15h3l-1.5 4 5-6h-3l1.5-2.5z" fill="#F7F1DC"></path></svg>' +
+            '<div class="mode__name">DELIVERY</div>' +
+            '<div class="mode__sub">Bolted to your door</div>' +
+          '</div>' +
+          '<div class="glass glass--tile mode hover-lift" data-act="go-pickup">' +
+            '<svg width="64" height="52" viewBox="0 0 64 52"><rect x="8" y="18" width="48" height="30" rx="4" fill="none" stroke="#7A2418" stroke-width="3"></rect><path d="M6 18 12 6h40l6 12" fill="none" stroke="#7A2418" stroke-width="3" stroke-linejoin="round"></path><path d="M8 18h48" stroke="#EE7623" stroke-width="4"></path><rect x="26" y="30" width="12" height="18" rx="2" fill="#EE7623"></rect></svg>' +
+            '<div class="mode__name">PICKUP</div>' +
+            '<div class="mode__sub">Skip the queue</div>' +
+          '</div>' +
+        '</div>' +
+
+        install +
+      '</div>';
+  });
+
+  A.action('install-dismiss', function (e) {
+    e.stopPropagation();
+    A.setState({ install: false });
+  });
+
+  A.action('go-delivery', function () {
+    A.state.otype = 'delivery';
+    A.nav('menu');
+  });
+
+  A.action('go-pickup', function () {
+    A.state.otype = 'pickup';
+    A.nav('menu');
+  });
+
 })(APP, D);
