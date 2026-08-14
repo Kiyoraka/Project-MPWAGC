@@ -1,0 +1,466 @@
+/* ==========================================================================
+   Getta Coffee - Customer PWA - App shell and shared component vocabulary
+
+   Everything here is a value lifted from "Getta PWA v2.dc.html". The design
+   writes them as inline styles on every element; this file collects the
+   repeated ones into classes so the screen modules stay readable.
+
+   Where the source used `style-hover="..."`, that compiles to a real CSS
+   pseudo-class in Claude Design's runtime (support.js line 428). Those are
+   written as genuine `:hover` rules here, not JS listeners.
+
+   THE BEZEL: the design wraps the app in a 390x844 phone with an 11px
+   #2B1510 border, 46px radius and a 0 30px 60px shadow. All four are gone.
+   The box itself and its contents are untouched.
+   ========================================================================== */
+
+/* ==========================================================================
+   The app column
+   ========================================================================== */
+
+.app {
+  position: relative;
+  width: 100%;
+  max-width: 390px;      /* the design's phone width - keeps every measured  */
+  margin-inline: auto;   /* value inside it exact, notably the 358px slides  */
+  height: 100dvh;
+  overflow: hidden;      /* screens scroll internally, the column does not   */
+  background: var(--app-grad);
+}
+
+/* Older browsers that do not know dvh still get a sane full-height column. */
+@supports not (height: 100dvh) {
+  .app { height: 100vh; }
+}
+
+/* ==========================================================================
+   Glow orbs - three radial gradients behind every screen
+   ========================================================================== */
+
+.orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.orb--orange {
+  top: -70px;
+  right: -90px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(238, 118, 35, .34), rgba(238, 118, 35, 0) 70%);
+}
+
+.orb--maroon {
+  top: 290px;
+  left: -110px;
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(122, 36, 24, .22), rgba(122, 36, 24, 0) 70%);
+}
+
+.orb--gold {
+  bottom: -90px;
+  right: -70px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(224, 165, 38, .28), rgba(224, 165, 38, 0) 70%);
+}
+
+/* ==========================================================================
+   Status bar - app content, kept from the source
+   ========================================================================== */
+
+.statusbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 60;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--dark);
+  pointer-events: none;
+}
+
+/* the splash screen is a maroon fill, so the bar inverts over it */
+.statusbar.is-light {
+  color: var(--cream);
+}
+
+.statusbar__icons {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Screens
+   ========================================================================== */
+
+.screens {
+  position: absolute;
+  inset: 0;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+.screen.is-active {
+  display: block;
+}
+
+/* screens that lay themselves out as a column (menu, product, cart, rewards) */
+.screen.is-active.screen--flex {
+  display: flex;
+  flex-direction: column;
+}
+
+/* every screen enters by sliding in from the right */
+.screen-in {
+  animation: scrIn .28s ease-out;
+}
+
+/* the scrolling body of a screen */
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* ==========================================================================
+   Glass surfaces - the vocabulary the whole app is built from
+   ========================================================================== */
+
+/* the standard frosted card */
+.glass {
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-glass-soft);
+}
+
+/* the same card, raised - home tiles, wallet card, ring card */
+.glass--raised {
+  box-shadow: var(--sh-glass);
+}
+
+.glass--tile {
+  border-radius: var(--r-tile);
+}
+
+/* the dark maroon "premium" surface: bolt-points tile, ETA card, balance */
+.glass-dark {
+  background: var(--maroon-glass);
+  border: 1px solid var(--glass-edge-dark);
+  -webkit-backdrop-filter: blur(var(--glass-blur-xs));
+  backdrop-filter: blur(var(--glass-blur-xs));
+  border-radius: var(--r-card);
+}
+
+/* sticky screen headers - menu, rewards */
+.glass-bar {
+  background: var(--glass-fill-bar);
+  -webkit-backdrop-filter: blur(var(--glass-blur-bar));
+  backdrop-filter: blur(var(--glass-blur-bar));
+  border-bottom: 1px solid var(--glass-edge);
+  flex: none;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+/* the round glass button - back arrows, bell, cart, settings */
+.gbtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-edge-btn);
+  background: var(--glass-fill-btn);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  backdrop-filter: blur(var(--glass-blur-sm));
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--maroon);
+  font-weight: 700;
+  padding: 0;
+}
+
+/* the home bell is a touch larger and carries an unread dot */
+.gbtn--lg {
+  width: 42px;
+  height: 42px;
+}
+
+/* source: style-hover="background:#F0E5C8" on the notification bell */
+.gbtn--lg:hover {
+  background: #F0E5C8;
+}
+
+.gbtn__dot {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 2px solid var(--cream);
+}
+
+/* the pill CTA with a 3D press shadow - two brand variants */
+.cta {
+  width: 100%;
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .4px;
+  transition: all .25s;
+}
+
+.cta--maroon {
+  background: var(--maroon);
+  color: var(--cream);
+  box-shadow: 0 5px 0 var(--maroon-press);
+}
+
+.cta--orange {
+  background: var(--orange);
+  color: #fff;
+  box-shadow: 0 5px 0 var(--orange-press);
+}
+
+.cta--success {
+  background: var(--success);
+  color: #fff;
+  box-shadow: 0 5px 0 var(--success-press);
+}
+
+/* outline CTA - "Back to Home", "+ Top Up" */
+.cta-outline {
+  background: none;
+  border: 2px solid var(--maroon);
+  color: var(--maroon);
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* source: style-hover="background:#7A2418;color:#F7F1DC" on Top Up */
+.cta-outline--fill:hover {
+  background: var(--maroon);
+  color: var(--cream);
+}
+
+/* ==========================================================================
+   Chips - the selectable pill used by option groups and the order-type switch
+   ========================================================================== */
+
+.chip {
+  padding: 9px 16px;
+  border-radius: var(--r-pill);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12.5px;
+  white-space: nowrap;
+  transition: all var(--t-quick);
+  background: var(--glass-fill);
+  color: var(--body);
+  box-shadow: inset 0 0 0 1px var(--glass-inset);
+}
+
+.chip--on {
+  background: var(--maroon);
+  color: var(--cream);
+  box-shadow: 0 3px 0 var(--maroon-press);
+}
+
+/* the segmented Pickup / Delivery control the chips sit inside */
+.segment {
+  flex: 1;
+  display: flex;
+  background: var(--glass-fill-soft);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  backdrop-filter: blur(var(--glass-blur-sm));
+  border-radius: var(--r-pill);
+  padding: 4px;
+  box-shadow: inset 0 0 0 1px var(--glass-edge);
+}
+
+.segment .chip {
+  flex: 1;
+}
+
+/* ==========================================================================
+   The drawn cup - a lid over a gradient body, reused at four sizes
+   Sizes live with their screens; this is the shared shape only.
+   ========================================================================== */
+
+.cup__lid {
+  background: var(--paper);
+  border: 1.5px solid var(--lid);
+  border-radius: 4px 4px 0 0;
+  box-sizing: border-box;
+}
+
+.cup__body {
+  border-radius: 2px 2px 13px 13px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* the foam band across the top of the drink */
+.cup__foam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 251, 236, .75);
+}
+
+/* the well a cup sits in - product cards, cart rows, account avatar */
+.cup-well {
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: var(--cup-well);
+  border: 1px solid var(--glass-edge-btn);
+}
+
+/* ==========================================================================
+   Bottom navigation
+   ========================================================================== */
+
+.navbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--glass-fill-nav);
+  -webkit-backdrop-filter: blur(var(--glass-blur-nav));
+  backdrop-filter: blur(var(--glass-blur-nav));
+  border-top: 1px solid var(--glass-edge-soft);
+  display: flex;
+  padding: 8px 6px 20px;
+  z-index: 45;
+}
+
+/* hidden on splash, onboard, product, cart and tracking */
+.navbar.is-hidden {
+  display: none;
+}
+
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  padding-top: 4px;
+}
+
+.nav-tab__pill {
+  position: relative;
+  width: 44px;
+  height: 30px;
+  border-radius: var(--r-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+  background: transparent;
+}
+
+.nav-tab--active .nav-tab__pill {
+  background: var(--maroon);
+}
+
+.nav-tab__lbl {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--inactive);
+}
+
+.nav-tab--active .nav-tab__lbl {
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+/* the small bolt that marks the active tab */
+.nav-tab__bolt {
+  position: absolute;
+  top: -3px;
+  right: -2px;
+}
+
+/* ==========================================================================
+   Small shared pieces
+   ========================================================================== */
+
+/* the bolt watermark that decorates dark cards and banners */
+.bolt-deco {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* a section heading in display type */
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--maroon);
+}
+
+/* the sticky footer gradient behind Add to Cart and Place Order */
+.sticky-foot {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 16px 26px;
+  background: linear-gradient(180deg, rgba(250, 243, 229, 0), rgba(250, 243, 229, .94) 34%);
+}
+
+/* generic row divider used by the account lists */
+.divider {
+  border-bottom: 1.5px solid var(--line-cream);
+}
+
+/* source: style-hover="background:#FBF6EA" on every account list row */
+.hover-row:hover {
+  background: var(--skel-b);
+}
+
+/* source: style-hover="transform:translateY(-3px)" on the two home tiles */
+.hover-lift {
+  transition: transform var(--t-quick);
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+}
