@@ -3,7 +3,255 @@
 
    product · cart · tracking · rewards · account
 
-   Populated by Phase 4 (Tasks 10-15). This file is referenced by index.html
-   from Task 3 onward so the page loads without a missing-stylesheet request
-   while Phase 3 is still in progress.
+   Values transcribed from "Getta PWA v2.dc.html".
    ========================================================================== */
+
+/* ==========================================================================
+   5 - Product
+   ========================================================================== */
+
+.prodv {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+}
+
+.prodv__head {
+  padding: 52px 16px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: none;
+}
+
+.prodv__cart-wrap {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-sizing: border-box;
+}
+
+/* the badge bounces once when an item lands in the cart */
+.cart-badge--bump {
+  animation: badgeB .45s;
+  animation-iteration-count: 1;
+}
+
+.prodv__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 20px 130px;
+}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.prodv__hero-row {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 4px;
+}
+
+.prodv__hero {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .65), rgba(246, 236, 210, .8));
+  -webkit-backdrop-filter: blur(var(--glass-blur-cup));
+  backdrop-filter: blur(var(--glass-blur-cup));
+  border: 1px solid rgba(255, 255, 255, .8);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.prodv__hero-bolt {
+  position: absolute;
+  top: 16px;
+  right: 8px;
+  opacity: .9;
+}
+
+.prodv__cup {
+  width: 86px;
+}
+
+.prodv__lid {
+  height: 16px;
+  border-width: 2px;
+  border-radius: 7px 7px 0 0;
+}
+
+.prodv__body {
+  height: 98px;
+  border-radius: 3px 3px 24px 24px;
+}
+
+.prodv__foam {
+  height: 20px;
+}
+
+/* --- name block ----------------------------------------------------------- */
+
+.prodv__text {
+  text-align: center;
+}
+
+.prodv__tag {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--orange-text);
+  letter-spacing: .8px;
+}
+
+.prodv__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--dark);
+  margin-top: 2px;
+}
+
+.prodv__price {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--maroon);
+  margin-top: 2px;
+}
+
+/* --- option groups -------------------------------------------------------- */
+
+.ogroup {
+  margin-top: 18px;
+}
+
+.ogroup__name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--dark);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.ogroup__hint {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.ogroup__opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+/* --- quantity ------------------------------------------------------------- */
+
+.qty {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.qty__lbl {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--dark);
+}
+
+.qty__box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--glass-fill-btn);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  backdrop-filter: blur(var(--glass-blur-sm));
+  border-radius: var(--r-pill);
+  padding: 5px;
+  box-shadow: inset 0 0 0 1px var(--glass-inset-sm);
+}
+
+.qty__btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qty__btn--minus {
+  border: 1px solid var(--glass-edge-btn);
+  background: var(--glass-fill-btn);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  backdrop-filter: blur(var(--glass-blur-sm));
+  color: var(--maroon);
+}
+
+.qty__btn--plus {
+  border: none;
+  background: var(--maroon);
+  color: var(--cream);
+}
+
+.qty__n {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--dark);
+  min-width: 16px;
+  text-align: center;
+}
+
+/* --- sticky Add to Cart ---------------------------------------------------- */
+
+.prodv__cta {
+  padding: 17px;
+  font-size: 16.5px;
+}
+
+.prodv__added {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prodv__zap {
+  animation: zapIn .4s both;
+}
+
+/* the dot that flies from the CTA toward the cart icon */
+.flydot {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: flyDot .65s ease-in forwards;
+  z-index: 5;
+}
