@@ -261,13 +261,8 @@
           var delay = (n * 0.03 + 0.02).toFixed(2);
           return '' +
             '<div class="glass prod entrance" style="animation:fadeUp .3s ' + delay + 's both" data-act="open-product" data-i="' + x.i + '">' +
-              '<div class="cup-well prod__well">' +
-                '<div class="prod__cup">' +
-                  '<div class="cup__lid prod__lid"></div>' +
-                  '<div class="cup__body prod__body" style="background:linear-gradient(180deg,' + x.p.c1 + ',' + x.p.c2 + ')">' +
-                    '<div class="cup__foam prod__foam"></div>' +
-                  '</div>' +
-                '</div>' +
+              '<div class="cup-well prod__well" style="--tint:' + x.p.c1 + '">' +
+                '<img class="prod__img" src="' + x.p.img + '" alt="' + A.esc(x.p.n) + '" loading="lazy" decoding="async" width="640" height="640">' +
               '</div>' +
               '<div class="prod__text">' +
                 '<div class="prod__tag">' + A.esc(x.p.tag) + '</div>' +

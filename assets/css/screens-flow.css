@@ -621,23 +621,19 @@
   width: 78px;
   height: 88px;
   border-radius: 12px;
-  padding-bottom: 8px;
+  padding: 0;
+  align-items: center;
+  overflow: hidden;
 }
 
-.prod__cup {
-  width: 46px;
-}
-
-.prod__lid {
-  height: 9px;
-}
-
-.prod__body {
-  height: 52px;
-}
-
-.prod__foam {
-  height: 11px;
+/* the product photo. --tint is the item's own gradient stop, showing
+   through while the image loads so the frame is never a blank hole. */
+.prod__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: color-mix(in srgb, var(--tint, #C08A52) 12%, transparent);
 }
 
 .prod__text {

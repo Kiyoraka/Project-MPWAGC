@@ -80,11 +80,11 @@
   backdrop-filter: blur(var(--glass-blur-cup));
   border: 1px solid rgba(255, 255, 255, .8);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 24px;
   box-sizing: border-box;
   position: relative;
+  overflow: hidden;   /* clip the photo to the circle */
 }
 
 .prodv__hero-bolt {
@@ -94,23 +94,13 @@
   opacity: .9;
 }
 
-.prodv__cup {
-  width: 86px;
-}
-
-.prodv__lid {
-  height: 16px;
-  border-width: 2px;
-  border-radius: 7px 7px 0 0;
-}
-
-.prodv__body {
-  height: 98px;
-  border-radius: 3px 3px 24px 24px;
-}
-
-.prodv__foam {
-  height: 20px;
+/* the hero photo, clipped to the circle it sits in */
+.prodv__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 /* --- name block ----------------------------------------------------------- */
@@ -373,22 +363,17 @@
   width: 44px;
   height: 52px;
   border-radius: 10px;
-  padding-bottom: 5px;
+  padding: 0;
+  align-items: center;
+  overflow: hidden;
 }
 
-.crow__cup {
-  width: 26px;
-}
-
-.crow__lid {
-  height: 5px;
-  border-width: 1px;
-  border-radius: 3px 3px 0 0;
-}
-
-.crow__cupbody {
-  height: 30px;
-  border-radius: 1px 1px 8px 8px;
+.crow__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: color-mix(in srgb, var(--tint, #C08A52) 12%, transparent);
 }
 
 .crow__text {

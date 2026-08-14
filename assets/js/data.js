@@ -36,30 +36,46 @@ var D = (function () {
      cat    index into CATS
      tag    the small uppercase orange line above the name
      pr     base price in RM, before size / milk / add-on deltas
-     c1/c2  gradient stops for the drawn cup - top to bottom
+     c1/c2  gradient stops - retained as the loading tint behind each photo
+            and as the fallback if an image ever fails to load
+     img    product photo in assets/img/products/
+
+     DEVIATION FROM THE DESIGN (Kiyo, 6:46 PM Aug 14): the source draws every
+     product as a CSS cup built from a lid div over a gradient body div, with
+     no image assets at all. Kiyo asked for real photography instead, so each
+     product now carries an `img`. The gradient stops stay because they still
+     tint the frame while a photo loads.
+
+     Photos generated with gpt-image-2 at 1024px, downscaled to 640px WebP
+     (22MB of PNG became 548KB). All are unbranded by prompt - no logos, no
+     text, no ZUS assets.
+
      Note: entries 14 and 15 (Top Picks) intentionally repeat Gula Melaka
      Latte and Kopi Getta with different tag lines. That is the design's
-     doing - the same drink appears in both Signature and Top Picks.
+     doing - the same drink appears in both Signature and Top Picks - so
+     they reuse the same two photos rather than duplicating them.
      --------------------------------------------------------------------- */
+  var IMG = 'assets/img/products/';
+
   var P = [
-    { cat: 0, n: 'Kopi Getta', tag: 'THE OG BOLT', pr: 8.9, c1: '#8A5A3B', c2: '#4A2C18' },
-    { cat: 0, n: 'Gula Melaka Latte', tag: 'SWEET LIKE KAMPUNG', pr: 12.9, c1: '#C08A52', c2: '#6B4423' },
-    { cat: 0, n: 'Pandan Cream Cold Brew', tag: 'GREEN & GORGEOUS', pr: 13.9, c1: '#9BB86A', c2: '#3E2418' },
-    { cat: 0, n: 'Santan Mocha', tag: 'COCONUT VOLTAGE', pr: 13.5, c1: '#A9714B', c2: '#3C2214' },
-    { cat: 1, n: 'Getta Long Black', tag: 'ZERO NOISE, FULL CHARGE', pr: 9.9, c1: '#5B3521', c2: '#2B1510' },
-    { cat: 1, n: 'Kopi O Kosong', tag: 'STRAIGHT UP STRIKE', pr: 8.9, c1: '#4A2C18', c2: '#231009' },
-    { cat: 2, n: 'Uji Matcha Latte', tag: 'CALM BUT CHARGED', pr: 14.9, c1: '#A8C57C', c2: '#5F7F3E' },
-    { cat: 2, n: 'Matcha Gula Melaka', tag: 'EAST MEETS ZAP', pr: 15.9, c1: '#B3C286', c2: '#77592E' },
-    { cat: 3, n: 'Teh Tarik Frappe', tag: 'PULLED. BLENDED. DONE.', pr: 11.9, c1: '#D9A96E', c2: '#9C6B3A' },
-    { cat: 3, n: 'Choc Bolt Blended', tag: 'THUNDER IN A CUP', pr: 15.9, c1: '#7A4A2E', c2: '#3C2214' },
-    { cat: 3, n: 'Cempedak Cream Blended', tag: 'LOUD & LOCAL', pr: 16.9, c1: '#E5C063', c2: '#B98B2E' },
-    { cat: 4, n: 'Kaya Butter Toast', tag: 'CRUNCH TIME', pr: 9.9, c1: '#E0B060', c2: '#A87428' },
-    { cat: 4, n: 'Polo Bun', tag: 'SOFT SERVE ENERGY', pr: 8.9, c1: '#E8C078', c2: '#B98B3E' },
-    { cat: 5, n: 'Duo Bolt Bundle', tag: '2 CUPS, 1 STRIKE', pr: 19.9, c1: '#8A5A3B', c2: '#4A2C18' },
-    { cat: 6, n: 'Gula Melaka Latte', tag: 'NO.1 THIS WEEK', pr: 12.9, c1: '#C08A52', c2: '#6B4423' },
-    { cat: 6, n: 'Kopi Getta', tag: 'FOREVER FAVOURITE', pr: 8.9, c1: '#8A5A3B', c2: '#4A2C18' },
-    { cat: 7, n: 'Nasi Lemak Brekkie Box', tag: 'FUEL OF CHAMPIONS', pr: 15.9, c1: '#7FA05A', c2: '#4E6B33' },
-    { cat: 7, n: 'Getta Big Brekkie', tag: 'THE FULL CHARGE', pr: 18.9, c1: '#D89A5A', c2: '#8F5A28' }
+    { cat: 0, n: 'Kopi Getta', tag: 'THE OG BOLT', pr: 8.9, c1: '#8A5A3B', c2: '#4A2C18', img: IMG + 'kopi-getta.webp' },
+    { cat: 0, n: 'Gula Melaka Latte', tag: 'SWEET LIKE KAMPUNG', pr: 12.9, c1: '#C08A52', c2: '#6B4423', img: IMG + 'gula-melaka-latte.webp' },
+    { cat: 0, n: 'Pandan Cream Cold Brew', tag: 'GREEN & GORGEOUS', pr: 13.9, c1: '#9BB86A', c2: '#3E2418', img: IMG + 'pandan-cream-cold-brew.webp' },
+    { cat: 0, n: 'Santan Mocha', tag: 'COCONUT VOLTAGE', pr: 13.5, c1: '#A9714B', c2: '#3C2214', img: IMG + 'santan-mocha.webp' },
+    { cat: 1, n: 'Getta Long Black', tag: 'ZERO NOISE, FULL CHARGE', pr: 9.9, c1: '#5B3521', c2: '#2B1510', img: IMG + 'getta-long-black.webp' },
+    { cat: 1, n: 'Kopi O Kosong', tag: 'STRAIGHT UP STRIKE', pr: 8.9, c1: '#4A2C18', c2: '#231009', img: IMG + 'kopi-o-kosong.webp' },
+    { cat: 2, n: 'Uji Matcha Latte', tag: 'CALM BUT CHARGED', pr: 14.9, c1: '#A8C57C', c2: '#5F7F3E', img: IMG + 'uji-matcha-latte.webp' },
+    { cat: 2, n: 'Matcha Gula Melaka', tag: 'EAST MEETS ZAP', pr: 15.9, c1: '#B3C286', c2: '#77592E', img: IMG + 'matcha-gula-melaka.webp' },
+    { cat: 3, n: 'Teh Tarik Frappe', tag: 'PULLED. BLENDED. DONE.', pr: 11.9, c1: '#D9A96E', c2: '#9C6B3A', img: IMG + 'teh-tarik-frappe.webp' },
+    { cat: 3, n: 'Choc Bolt Blended', tag: 'THUNDER IN A CUP', pr: 15.9, c1: '#7A4A2E', c2: '#3C2214', img: IMG + 'choc-bolt-blended.webp' },
+    { cat: 3, n: 'Cempedak Cream Blended', tag: 'LOUD & LOCAL', pr: 16.9, c1: '#E5C063', c2: '#B98B2E', img: IMG + 'cempedak-cream-blended.webp' },
+    { cat: 4, n: 'Kaya Butter Toast', tag: 'CRUNCH TIME', pr: 9.9, c1: '#E0B060', c2: '#A87428', img: IMG + 'kaya-butter-toast.webp' },
+    { cat: 4, n: 'Polo Bun', tag: 'SOFT SERVE ENERGY', pr: 8.9, c1: '#E8C078', c2: '#B98B3E', img: IMG + 'polo-bun.webp' },
+    { cat: 5, n: 'Duo Bolt Bundle', tag: '2 CUPS, 1 STRIKE', pr: 19.9, c1: '#8A5A3B', c2: '#4A2C18', img: IMG + 'duo-bolt-bundle.webp' },
+    { cat: 6, n: 'Gula Melaka Latte', tag: 'NO.1 THIS WEEK', pr: 12.9, c1: '#C08A52', c2: '#6B4423', img: IMG + 'gula-melaka-latte.webp' },
+    { cat: 6, n: 'Kopi Getta', tag: 'FOREVER FAVOURITE', pr: 8.9, c1: '#8A5A3B', c2: '#4A2C18', img: IMG + 'kopi-getta.webp' },
+    { cat: 7, n: 'Nasi Lemak Brekkie Box', tag: 'FUEL OF CHAMPIONS', pr: 15.9, c1: '#7FA05A', c2: '#4E6B33', img: IMG + 'nasi-lemak-brekkie-box.webp' },
+    { cat: 7, n: 'Getta Big Brekkie', tag: 'THE FULL CHARGE', pr: 18.9, c1: '#D89A5A', c2: '#8F5A28', img: IMG + 'getta-big-brekkie.webp' }
   ];
 
   /* --- Home banner carousel (3 slides, 3600ms interval) ------------------ */

@@ -43,9 +43,11 @@ var APP = (function (D) {
     flying: false,
     bump: 0,
 
+    /* the two rows the design starts the demo with - images pulled from the
+       matching catalogue entries so the cart never hardcodes a second path */
     cart: [
-      { n: 'Gula Melaka Latte', det: 'Large · Oat milk · 70% sugar', pr: 16.9, qty: 1, c1: '#C08A52', c2: '#6B4423' },
-      { n: 'Kaya Butter Toast', det: 'Extra kaya', pr: 9.9, qty: 1, c1: '#E0B060', c2: '#A87428' }
+      { n: 'Gula Melaka Latte', det: 'Large · Oat milk · 70% sugar', pr: 16.9, qty: 1, c1: '#C08A52', c2: '#6B4423', img: D.P[1].img },
+      { n: 'Kaya Butter Toast', det: 'Extra kaya', pr: 9.9, qty: 1, c1: '#E0B060', c2: '#A87428', img: D.P[11].img }
     ],
 
     dragI: -1,

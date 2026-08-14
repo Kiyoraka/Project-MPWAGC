@@ -73,12 +73,7 @@
           '<div class="prodv__hero-row">' +
             '<div class="prodv__hero">' +
               '<svg class="prodv__hero-bolt" width="40" height="40" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg>' +
-              '<div class="prodv__cup">' +
-                '<div class="cup__lid prodv__lid"></div>' +
-                '<div class="cup__body prodv__body" style="background:linear-gradient(180deg,' + p.c1 + ',' + p.c2 + ')">' +
-                  '<div class="cup__foam prodv__foam"></div>' +
-                '</div>' +
-              '</div>' +
+              '<img class="prodv__img" src="' + p.img + '" alt="' + A.esc(p.n) + '" decoding="async" width="640" height="640">' +
             '</div>' +
           '</div>' +
 
@@ -140,7 +135,7 @@
 
     A.T(function () {
       A.state.cart = A.state.cart.concat({
-        n: p.n, det: det, pr: price, qty: A.state.qty, c1: p.c1, c2: p.c2
+        n: p.n, det: det, pr: price, qty: A.state.qty, c1: p.c1, c2: p.c2, img: p.img
       });
       A.setState({ bump: A.state.bump + 1, flying: false });
     }, 620);
@@ -172,11 +167,8 @@
             '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M9 3h6l1 2h4v2H4V5h4l1-2zM6 8h12l-1 13H7L6 8z" fill="#fff"></path></svg>' +
           '</div>' +
           '<div class="crow__body" data-p="cartrow" data-i="' + i + '" style="' + rowStyle + '">' +
-            '<div class="cup-well crow__well">' +
-              '<div class="crow__cup">' +
-                '<div class="cup__lid crow__lid"></div>' +
-                '<div class="cup__body crow__cupbody" style="background:linear-gradient(180deg,' + c.c1 + ',' + c.c2 + ')"></div>' +
-              '</div>' +
+            '<div class="cup-well crow__well" style="--tint:' + c.c1 + '">' +
+              '<img class="crow__img" src="' + c.img + '" alt="' + A.esc(c.n) + '" loading="lazy" decoding="async" width="640" height="640">' +
             '</div>' +
             '<div class="crow__text">' +
               '<div class="crow__name">' + A.esc(c.n) + '</div>' +
