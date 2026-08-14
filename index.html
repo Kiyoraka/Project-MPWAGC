@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- viewport-fit=cover so the app can reach under a phone's notch and home bar -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7A2418">
+<title>Getta Coffee</title>
+
+<!--
+  Getta Coffee - Customer PWA (hardcoded front end)
+
+  Ported from the Claude Design project "Getta Coffee ordering platform"
+  (9b7c1d15-3ef9-4fb5-9689-4a1c26428a10), file "Getta PWA v2.dc.html" - the
+  GLASS theme. The design runs on Claude Design's private runtime (x-dc,
+  sc-for, sc-if, DCLogic) which no browser can execute, so it has been
+  hand-ported to vanilla JS: same markup, same values, same data, same
+  animation timings, a different renderer.
+
+  The design presents the app inside a 390x844 phone with an 11px bezel,
+  46px radius and a drop shadow. Per Kiyo's decision that chrome is removed
+  and NOTHING inside it is changed - including the 9:41 status bar, which
+  sits inside the phone in the source and is therefore app content.
+
+  Demo only. No backend, no auth, no persistence - a refresh resets it.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/screens-flow.css">
+<link rel="stylesheet" href="assets/css/screens-order.css">
+</head>
+
+<body>
+
+<!-- ==========================================================================
+     The app column. 390px wide, bezel-less, centred on anything wider.
+     ========================================================================== -->
+<div class="app" id="app">
+
+  <!-- The three radial glow orbs that sit behind every screen.
+       Kept exactly as the design has them: inset:0, non-interactive. -->
+  <div class="orbs" aria-hidden="true">
+    <div class="orb orb--orange"></div>
+    <div class="orb orb--maroon"></div>
+    <div class="orb orb--gold"></div>
+  </div>
+
+  <!-- Status bar. App content in the source, so it stays.
+       Its colour flips to cream on the maroon splash - handled in JS. -->
+  <div class="statusbar" id="statusbar" aria-hidden="true">
+    <div>9:41</div>
+    <div class="statusbar__icons">
+      <svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 8h2v4H1zM5 6h2v6H5zM9 3h2v9H9zM13 0h2v12h-2z" fill="currentColor"></path></svg>
+      <svg width="16" height="12" viewBox="0 0 24 16"><path d="M12 14a2 2 0 1 0 .01 0zM7.5 10.5a7 7 0 0 1 9 0l-1.8 2a4.4 4.4 0 0 0-5.4 0zM3.5 6.5a13 13 0 0 1 17 0l-1.8 2a10.4 10.4 0 0 0-13.4 0z" fill="currentColor"></path></svg>
+      <svg width="22" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"></rect><rect x="3" y="3" width="12" height="6" rx="1.4" fill="currentColor"></rect><rect x="21.5" y="4" width="2" height="4" rx="1" fill="currentColor"></rect></svg>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Screen containers, in the source's order. Each is filled by its
+       renderer in screens-flow.js / screens-order.js and shown one at a time.
+
+       These are emptied and re-rendered rather than hidden, because the
+       design's sc-if unmounts on false - which is what lets every entrance
+       animation replay on re-entry.
+       ======================================================================== -->
+  <main class="screens" id="screens">
+    <section class="screen" id="screen-splash"   data-screen="splash"></section>
+    <section class="screen" id="screen-onboard"  data-screen="onboard"></section>
+    <section class="screen" id="screen-home"     data-screen="home"></section>
+    <section class="screen" id="screen-menu"     data-screen="menu"></section>
+    <section class="screen" id="screen-product"  data-screen="product"></section>
+    <section class="screen" id="screen-cart"     data-screen="cart"></section>
+    <section class="screen" id="screen-tracking" data-screen="tracking"></section>
+    <section class="screen" id="screen-rewards"  data-screen="rewards"></section>
+    <section class="screen" id="screen-account"  data-screen="account"></section>
+  </main>
+
+  <!-- Bottom navigation. Rendered by app.js from D.NAVDEF; shown only on
+       the four tab screens (home / menu / rewards / account). -->
+  <nav class="navbar" id="navbar" aria-label="Primary"></nav>
+
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/screens-flow.js"></script>
+<script src="assets/js/screens-order.js"></script>
+<script>APP.start();</script>
+
+</body>
+</html>
