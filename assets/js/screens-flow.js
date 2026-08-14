@@ -47,4 +47,59 @@
       '</div>';
   });
 
+  /* ========================================================================
+     2 - Onboarding
+
+     Three slides. The source puts key="{{ obIdx }}" on the slide body, which
+     React treats as a remount instruction - so the fadeUp entrance replays
+     on every slide change. Our renderer rebuilds the screen on each state
+     change anyway, so the same replay happens for the same reason.
+
+     Dots morph 8px -> 24px on the active index. The CTA reads "Next" until
+     the last slide, then "Let's Getta Coffee".
+     ======================================================================== */
+
+  A.screen('onboard', function (s) {
+    var slide = D.OB[s.obIdx];
+    var last = s.obIdx >= D.OB.length - 1;
+
+    var dots = D.OB.map(function (_, i) {
+      return '<div class="ob-dot' + (i === s.obIdx ? ' ob-dot--active' : '') + '"></div>';
+    }).join('');
+
+    return '' +
+      '<div class="onboard">' +
+        '<div class="onboard__skip-row">' +
+          '<button class="onboard__skip" data-act="ob-skip">Skip</button>' +
+        '</div>' +
+
+        '<div class="onboard__body">' +
+          '<div class="onboard__disc" style="background:' + slide.bg + '">' +
+            '<svg width="84" height="84" viewBox="0 0 24 24"><path d="' + slide.ic + '" fill="#F7F1DC"></path></svg>' +
+          '</div>' +
+          '<div class="onboard__title">' + A.esc(slide.t) + '</div>' +
+          '<div class="onboard__desc">' + A.esc(slide.d) + '</div>' +
+        '</div>' +
+
+        '<div class="onboard__dots">' + dots + '</div>' +
+
+        '<button class="cta cta--maroon onboard__cta" data-act="ob-next">' +
+          (last ? 'Let\'s Getta Coffee' : 'Next') +
+        '</button>' +
+      '</div>';
+  });
+
+  A.action('ob-skip', function () {
+    A.nav('home');
+  });
+
+  A.action('ob-next', function () {
+    var s = A.state;
+    if (s.obIdx >= D.OB.length - 1) {
+      A.nav('home');
+    } else {
+      A.setState({ obIdx: s.obIdx + 1 });
+    }
+  });
+
 })(APP, D);

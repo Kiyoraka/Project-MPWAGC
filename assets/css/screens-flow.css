@@ -54,3 +54,96 @@
   letter-spacing: 3px;
   margin-top: 12px;
 }
+
+/* ==========================================================================
+   2 - Onboarding
+   ========================================================================== */
+
+.onboard {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(165deg, #FBF5E4, #F2E5CA);
+  display: flex;
+  flex-direction: column;
+  padding: 64px 28px 40px;
+  z-index: 40;
+}
+
+.onboard__skip-row {
+  text-align: right;
+}
+
+.onboard__skip {
+  background: none;
+  border: none;
+  color: var(--maroon);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+/* the slide body - replays fadeUp on every slide change, because the
+   renderer rebuilds it exactly as the source's key= remount does */
+.onboard__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  text-align: center;
+  animation: fadeUp .3s ease-out;
+}
+
+.onboard__disc {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--sh-drop);
+}
+
+.onboard__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 27px;
+  color: var(--maroon);
+  line-height: 1.15;
+  max-width: 280px;
+}
+
+.onboard__desc {
+  color: var(--body);
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+.onboard__dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-bottom: 22px;
+}
+
+.ob-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--sand-dot);
+  transition: all .25s;
+}
+
+.ob-dot--active {
+  width: 24px;
+  background: var(--maroon);
+}
+
+.onboard__cta {
+  padding: 17px;
+  font-size: 17px;
+  letter-spacing: .5px;
+}
