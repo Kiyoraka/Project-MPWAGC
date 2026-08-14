@@ -613,4 +613,102 @@
     A.nav('rewards');
   });
 
+  /* ========================================================================
+     9 - Account
+
+     Avatar, wallet card, and two link lists whose rows cross into other
+     screens: Orders opens tracking, Missions and My Vouchers open rewards
+     on the right tab.
+     ======================================================================== */
+
+  var CHEVRON = '<svg width="13" height="13" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="#8A6A55" stroke-width="2.4" stroke-linecap="round"></path></svg>';
+
+  function acctRow(icon, label, act, extra, last, fill) {
+    return '' +
+      '<div class="acct-row hover-row' + (last ? '' : ' divider') + '"' + (act ? ' data-act="' + act + '"' + (extra || '') : '') + '>' +
+        '<svg width="19" height="19" viewBox="0 0 24 24"><path d="' + icon + '" fill="' + (fill || '#7A2418') + '"></path></svg>' +
+        '<div class="acct-row__lbl">' + label + '</div>' +
+        CHEVRON +
+      '</div>';
+  }
+
+  A.screen('account', function (s) {
+    return '' +
+      '<div class="acct noscroll">' +
+
+        '<div class="acct__head">' +
+          '<div class="acct__spacer"></div>' +
+          '<div class="acct__title">Account</div>' +
+          '<button class="gbtn">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm9 4a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-2-1.2L16 3H8l-.4 2.6a7 7 0 0 0-2 1.2l-2.5-1-2 3.4 2 1.6a7 7 0 0 0 0 2.4l-2 1.6 2 3.4 2.5-1a7 7 0 0 0 2 1.2L8 21h8l.4-2.6a7 7 0 0 0 2-1.2l2.5 1 2-3.4-2-1.6c.06-.4.1-.8.1-1.2z" fill="#7A2418"></path></svg>' +
+          '</button>' +
+        '</div>' +
+
+        '<div class="acct__id">' +
+          /* the avatar is a little cup with a face, drawn in divs as the
+             source draws it - dark glass lid over an orange body */
+          '<div class="acct__avatar">' +
+            '<div class="acct__cup">' +
+              '<div class="acct__cup-lid"></div>' +
+              '<div class="acct__cup-body">' +
+                '<div class="acct__eye acct__eye--l"></div>' +
+                '<div class="acct__eye acct__eye--r"></div>' +
+                '<div class="acct__mouth"></div>' +
+                '<div class="acct__blush acct__blush--l"></div>' +
+                '<div class="acct__blush acct__blush--r"></div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<div class="acct__choose">CHOOSE YOUR AVATAR</div>' +
+            '<div class="acct__name">' + A.esc(D.COPY.customerName) + '</div>' +
+            '<div class="acct__email">' + A.esc(D.COPY.customerEmail) + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="glass glass--tile glass--raised acct__wallet">' +
+          '<div class="acct__wallet-top">' +
+            '<div class="cup-well acct__wcup-well">' +
+              '<div class="acct__wcup">' +
+                '<div class="cup__lid acct__wlid"></div>' +
+                '<div class="acct__wbody"><svg width="10" height="12" viewBox="0 0 24 24"><path d="' + BOLT_PATH + '" fill="#EE7623"></path></svg></div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="acct__wtext">' +
+              '<div class="acct__wlbl">Balance</div>' +
+              '<div class="acct__wbal"><span class="acct__wrm">RM</span> 24.60</div>' +
+              '<button class="cta-outline cta-outline--fill acct__topup">+ Top Up</button>' +
+            '</div>' +
+            '<svg width="14" height="14" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="#8A6A55" stroke-width="2.4" stroke-linecap="round"></path></svg>' +
+          '</div>' +
+          '<div class="acct__split">' +
+            '<div class="acct__stat">' +
+              '<div class="acct__stat-lbl">Bolt Points <span class="acct__stat-tag">DAILY CHECK-IN</span></div>' +
+              '<div class="acct__stat-v">' + s.points + ' pts</div>' +
+            '</div>' +
+            '<div class="acct__rule"></div>' +
+            '<div class="acct__stat">' +
+              '<div class="acct__stat-lbl">Cup Streak</div>' +
+              '<div class="acct__stat-v">4 / 10 ☕︎</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="acct__section">My Purchase</div>' +
+        '<div class="glass acct__list">' +
+          acctRow('M5 3h14v18l-2-1.5L15 21l-2-1.5L11 21l-2-1.5L7 21l-2-1.5V3zm3 5h8v1.8H8V8zm0 4h8v1.8H8V12z', 'Orders', 'nav', ' data-s="tracking"', false) +
+          acctRow('M8 2h8l-1 4H9L8 2zm-1 6h10l-1.2 14H8.2L7 8zm5 3-2.4 4.6h2l-1 3.8 3.8-5.4h-2l.8-3z', 'Register Your Tumbler', null, null, true) +
+        '</div>' +
+
+        '<div class="acct__section">Especially For You</div>' +
+        '<div class="glass acct__list acct__list--last">' +
+          acctRow(BOLT_PATH, 'Missions &amp; Rewards', 'nav', ' data-s="rewards"', false, '#EE7623') +
+          acctRow('M3 7h18v4a2 2 0 0 0 0 2v4H3v-4a2 2 0 0 0 0-2V7zm5 2v6h1.6V9H8zm4 0-2 3.8h1.6l-.8 3 3.2-4.4h-1.6l.8-2.4h-1.2z', 'My Vouchers', 'go-vouchers', null, true) +
+        '</div>' +
+
+        '<div class="acct__footer">' + A.esc(D.COPY.footer) + '</div>' +
+
+      '</div>';
+  });
+
 })(APP, D);
